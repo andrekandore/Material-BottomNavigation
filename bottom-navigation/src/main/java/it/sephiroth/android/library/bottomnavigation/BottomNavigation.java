@@ -476,7 +476,7 @@ public class BottomNavigation extends FrameLayout implements OnItemClickListener
             final int widthSize = MeasureSpec.getSize(widthMeasureSpec);
 
             if (widthMode == MeasureSpec.AT_MOST) {
-                throw new IllegalArgumentException("layout_width must be equal to `match_parent`");
+                log(TAG,INFO,"layout_width is recommended be equal to `match_parent`");
             }
             setMeasuredDimension(widthSize, defaultHeight + bottomInset + shadowHeight);
 
@@ -485,7 +485,7 @@ public class BottomNavigation extends FrameLayout implements OnItemClickListener
             final int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
             if (heightMode == MeasureSpec.AT_MOST) {
-                throw new IllegalArgumentException("layout_height must be equal to `match_parent`");
+                log(TAG,INFO,"layout_height is recommended be equal to `match_parent`");
             }
             setMeasuredDimension(defaultWidth, heightSize);
         } else {
