@@ -4,6 +4,9 @@
     <declare-styleable name="BottomNavigation">
         <attr name="bbn_entries" format="reference" />
         <attr name="bbn_badgeProvider" format="string" />
+        <!-- configure min/max allowable tab count -->
+        <attr name="bbn_defaultMinTabCount" format="integer" />
+        <attr name="bbn_defaultMaxTabCount" format="integer" />
     </declare-styleable>
 
     <!-- styles for the menu resource -->

@@ -76,6 +76,9 @@ public class BottomNavigation extends FrameLayout implements OnItemClickListener
     static final int PENDING_ACTION_COLLAPSED = 0x2;
     static final int PENDING_ACTION_ANIMATE_ENABLED = 0x4;
 
+    static final int DEFAULT_MIN_TAB_COUNT = 3;
+    static final int DEFAULT_MAX_TAB_COUNT = 5;
+
     private static final String WIDGET_PACKAGE_NAME;
 
     static {
@@ -195,6 +198,35 @@ public class BottomNavigation extends FrameLayout implements OnItemClickListener
      */
     private boolean attached;
 
+    /**
+     * Min and Max Tab Counts, can only be set at initialization points.
+     * Illegal/nonsense values will be ignored (lt zero, max lt min etc)
+     */
+    private int defaultMinTabCount = DEFAULT_MIN_TAB_COUNT;
+    public int getDefaultMinTabCount() {
+        return defaultMinTabCount;
+    }
+
+    private void setDefaultMinTabCount(final int newMin) {
+        if (newMin < 1) {
+            return;
+        }
+        defaultMinTabCount = newMin;
+    }
+
+    private int defaultMaxTabCount = DEFAULT_MAX_TAB_COUNT;
+    public int getDefaultMaxTabCount() {
+        return defaultMaxTabCount;
+    }
+
+    private void setDefaultMaxTabCount(final int newMax) {
+        if (newMax < defaultMinTabCount || newMax < 1) {
+            return;
+        }
+        defaultMaxTabCount = newMax;
+    }
+
+
     private BadgeProvider badgeProvider;
 
     public BottomNavigation(final Context context) {
@@ -262,6 +294,10 @@ public class BottomNavigation extends FrameLayout implements OnItemClickListener
         final int menuResId = array.getResourceId(R.styleable.BottomNavigation_bbn_entries, 0);
         pendingMenu = MenuParser.inflateMenu(context, menuResId);
         badgeProvider = parseBadgeProvider(this, context, array.getString(R.styleable.BottomNavigation_bbn_badgeProvider));
+
+        setDefaultMinTabCount(array.getInt(R.styleable.BottomNavigation_bbn_defaultMinTabCount,DEFAULT_MIN_TAB_COUNT));
+        setDefaultMaxTabCount(array.getInt(R.styleable.BottomNavigation_bbn_defaultMaxTabCount,DEFAULT_MAX_TAB_COUNT));
+
         array.recycle();
 
         backgroundColorAnimation = getResources().getInteger(R.integer.bbn_background_animation_duration);
@@ -548,8 +584,8 @@ public class BottomNavigation extends FrameLayout implements OnItemClickListener
         this.menu = menu;
 
         if (null != menu) {
-            if (menu.getItemsCount() < 3 || menu.getItemsCount() > 5) {
-                throw new IllegalArgumentException("BottomNavigation expects 3 to 5 items. " + menu.getItemsCount() + " found");
+            if (menu.getItemsCount() < defaultMinTabCount || menu.getItemsCount() > defaultMaxTabCount) {
+                throw new IllegalArgumentException("BottomNavigation expects "+defaultMinTabCount+" to "+defaultMaxTabCount+" items. " + menu.getItemsCount() + " found");
             }
 
             enabledRippleBackground = !menu.getItemAt(0).hasColor() || menu.isTablet();
