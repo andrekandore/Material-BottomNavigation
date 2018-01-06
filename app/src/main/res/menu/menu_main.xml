@@ -79,4 +79,17 @@
         android:orderInCategory="100"
         android:title="No Coordinator"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/item14"
+        android:orderInCategory="100"
+        android:title="Less than 3 Items"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/item15"
+        android:orderInCategory="100"
+        android:title="Greater than 5 Items"
+        app:showAsAction="never" />
+
 </menu>

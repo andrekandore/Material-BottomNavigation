@@ -41,6 +41,9 @@ public class MainActivity extends BaseActivity implements BottomNavigation.OnMen
     public static final int MENU_TYPE_5_ITEMS = 4;
     public static final int MENU_TYPE_5_ITEMS_NO_BACKGROUND = 5;
 
+    public static final int MENU_TYPE_LT3_ITEMS = 6;
+    public static final int MENU_TYPE_GT5_ITEMS = 7;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,7 +200,10 @@ public class MainActivity extends BaseActivity implements BottomNavigation.OnMen
             case R.id.item13:
                 startActivity(new Intent(this, MainActivityNoCoordinator.class));
                 return true;
-
+            case R.id.item14:
+                return setMenuType(MENU_TYPE_LT3_ITEMS);
+            case R.id.item15:
+                return setMenuType(MENU_TYPE_GT5_ITEMS);
         }
 
         return super.onOptionsItemSelected(item);
@@ -233,6 +239,11 @@ public class MainActivity extends BaseActivity implements BottomNavigation.OnMen
             case MENU_TYPE_5_ITEMS_NO_BACKGROUND:
                 navigation.inflateMenu(R.menu.bottombar_menu_5items_no_background);
                 break;
+            case MENU_TYPE_LT3_ITEMS:
+                navigation.inflateMenu(R.menu.bottombar_menu_lessthan_3items);
+                break;
+            case MENU_TYPE_GT5_ITEMS:
+                navigation.inflateMenu(R.menu.bottombar_menu_morethan_5items);
         }
 
         return true;
